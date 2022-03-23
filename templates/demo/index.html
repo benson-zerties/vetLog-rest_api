@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div role="grid" class="table">
+  <div role="row" class="row-header">
+    <div role="gridcell-head" class="cell">
+		Tier
+    </div>
+    <div role="gridcell-head" class="cell">
+		Medikament
+    </div>
+    <div role="gridcell-head" class="cell">
+		Datum
+    </div>
+  </div>
+  {% for post in posts %}
+  <div role="row" class="row" style="cursor: pointer;"onclick="window.location='{{ url_for('demo.update', medication_id=post['id']) }}';">
+    <div role="gridcell" class="cell">
+		{{ post['animal_id'] }}
+    </div>
+    <div role="gridcell" class="cell">
+		{{ post['drug'] }}
+    </div>
+    <div role="gridcell" class="cell">
+		{{ post['date'].strftime('%Y-%m-%d') }}</td>
+    </div>
+  </div>
+  {% endfor %}
+ </div>
+  {% endblock %}

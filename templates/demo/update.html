@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Bearbeiten{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div role="grid" class="table">
+  <div role="row" class="row-header">
+    <div role="gridcell-head" class="cell">
+		Tier
+    </div>
+    <div role="gridcell-head" class="cell">
+		Medikament
+    </div>
+    <div role="gridcell-head" class="cell">
+		Datum
+    </div>
+  </div>
+  <div role="row" class="row">
+    <div role="gridcell" class="cell">
+		{{ medication['animal_id'] }}
+    </div>
+    <div role="gridcell" class="cell">
+		{{ medication['drug'] }}
+    </div>
+    <div role="gridcell" class="cell">
+		{{ medication['date'].strftime('%Y-%m-%d') }}</td>
+    </div>
+  </div>
+ </div>
+ <h3>Diagnose</h3>
+ <div> {{medication['diagnosis']}} </div>
+ <h3>Menge</h3>
+ <div> {{medication['usage']}} </div>
+ <h3>Wartezeit</h3>
+ <div> {{medication['waiting_period']}} </div>
+
+  <hr>
+  {#
+  <form action="{{ url_for('demo.save_medication') }}" method="post">
+   #}
+  <form method="post">
+    <label for="date">Datum der Anwendung</label>
+    <input name="date" id="date" value="{{request.form['date'] or date.strftime('%Y-%m-%d') }}" required>
+    <label for="note">Notiz</label>
+	<input name="note" id="note" value="{{request.form['note'] or ''}}">
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+
+<div role="grid" class="table">
+  <div role="row" class="row-header">
+    <div role="gridcell-head" class="cell">
+		Datum der Anwendung
+    </div>
+    <div role="gridcell-head" class="cell">
+		Notiz
+    </div>
+  </div>
+  {% for entry in used_med  %}
+  <div role="row" class="row">
+    <div role="gridcell" class="cell">
+		{{ entry['date'].strftime('%Y-%m-%d') }}</td>
+    </div>
+    <div role="gridcell" class="cell">
+		{{ entry['note'] }}
+    </div>
+    <div role="gridcell" class="cell">
+	  <form action="{{ url_for('demo.delete_med_usage', med_usage_id=entry['id']) }}" method="post">
+        <input type="hidden" id="medication_id" name="medication_id" value="{{medication['id']}}">
+        <input class="danger" type="submit" value="Entfernen" onclick="return confirm('Wirklich entfernen?');">
+	  </form>
+    </div>
+  </div>
+  {% endfor %}
+ </div>
+
+{% endblock %}

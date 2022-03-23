@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <table class="w3-table w3-striped">
+    <tr>
+      <th>Datum</th>
+      <th>Tier</th>
+      <th>Medikament</th>
+      <th>Anzahl</th>
+    </tr>
+	{% for post in posts %}
+    <tr>
+      <td>
+		{{ post[0]['date'].strftime('%Y-%m-%d') }}
+	  </td>
+      <td>
+		{{ post[0]['animal_id'] }}
+	  </td>
+      <td>
+		{{ post[0]['drug'] }}
+	  </td>
+      <td>
+		{{ post[0]['usage'] }}
+	  </td>
+    </tr>
+   {% for used in post[1] %}
+    <tr>
+      <td>
+	  </td>
+      <td>
+		  Anwendung {{loop.index}}
+	  </td>
+      <td>
+		{{ used['date'].strftime('%Y-%m-%d') }}
+	  </td>
+      <td>
+		{{ used['note'] }}
+	  </td>
+    </tr>
+   {% endfor %}
+   {% endfor %}
+  </table>
+ </div>
+  {% endblock %}
